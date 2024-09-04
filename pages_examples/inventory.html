@@ -1,0 +1,256 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Инвентарь</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .header {
+            background-color: #5fa697;
+            padding: 10px;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            padding-left: 20px;
+        }
+
+        .header img {
+            width: 3.75em;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-buttons button {
+            padding: 10px;
+            background-color: #5fa697;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1.1rem;
+        }
+
+        .nav-buttons button:hover {
+            background-color: #499482;
+        }
+
+        .container {
+            display: flex;
+            flex-grow: 1;
+            padding: 20px;
+        }
+
+        .main {
+            width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: white;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #5fa697;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .bottom-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .pagination {
+            display: flex;
+            gap: 10px;
+        }
+
+        .pagination button {
+            padding: 10px 15px;
+            background-color: #5fa697;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .pagination button:hover {
+            background-color: #499482;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .actions button {
+            padding: 10px;
+            background-color: #5fa697;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .actions button:hover {
+            background-color: #499482;
+        }
+
+        .footer {
+            background-color: #5fa697;
+            color: white;
+            text-align: center;
+            padding: 10px;
+            border-top-left-radius: 10px;
+            border-top-right-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <img src="https://smilefoto.me/assets/32831d4f/images/logo.jpg" class="Logo">
+    <div class="nav-buttons">
+        <button>Профиль</button>
+        <button>Инвентарь</button>
+        <button>Продажи</button>
+        <button>Создать отчет смены</button>
+        <button>Выйти</button>
+    </div>
+</div>
+
+<div class="container">
+    <div class="main">
+        <table>
+            <thead>
+            <tr>
+                <th>№</th>
+                <th>Название</th>
+                <th>Цена</th>
+                <th>Остаток</th>
+                <th>Комментарий</th>
+            </tr>
+            </thead>
+            <tbody id="inventory-table"></tbody>
+        </table>
+        <div class="bottom-controls">
+            <div class="pagination">
+                <button style="opacity: 60%">«</button>
+                <button>1</button>
+                <button style="opacity: 60%">»</button>
+            </div>
+            <div class="actions">
+                <button>Редактировать инвентарь</button>
+                <button>Создать новую запись</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="footer">
+    &copy; 2024, SmileFoto
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const inventory = [
+            {
+                id: 1,
+                name: 'Фото печатное 15х20/10x15',
+                price: '500 р.',
+                comment: '15x20 photo'
+            },
+            {
+                id: 2,
+                name: 'Магнит 10х15',
+                price: '600 р.',
+                comment: 'Photo magnet 10x15'
+            },
+            {
+                id: 3,
+                name: 'Магнит 10х15 акриловый',
+                price: '600 р.',
+                comment: 'Photo magnet 10x15 acrilic'
+            },
+            {
+                id: 4,
+                name: 'Магнит 15х20',
+                price: '700 р.',
+                comment: 'Photo magnet 15x20'
+            },
+            {
+                id: 5,
+                name: 'Фото в деревянной рамке А4',
+                price: '1000 р.',
+                comment: 'Photo in A4 wooden frame'
+            },
+            {
+                id: 6,
+                name: 'Фото кружка',
+                price: '800 р.',
+                comment: 'Photo mug'
+            },
+            {
+                id: 7,
+                name: 'Ёлочный шар',
+                price: '1100 р.',
+                comment: 'Christmas tree toy'
+            }
+        ];
+
+        const tableBody = document.getElementById('inventory-table');
+
+        inventory.forEach(item => {
+            const row = document.createElement('tr');
+            item.quantity = Math.floor(Math.random() * 46 + 10) * 4 - Math.floor(Math.random() * 6 + 10) * 3;
+
+            row.innerHTML = `
+                <td>${item.id}</td>
+                <td>${item.name}</td>
+                <td>${item.price}</td>
+                <td>${item.quantity}</td>
+                <td>${item.comment}</td>
+            `;
+
+            tableBody.appendChild(row);
+        });
+    });
+</script>
+
+</body>
+</html>

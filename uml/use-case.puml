@@ -1,0 +1,54 @@
+@startuml final
+
+left to right direction
+
+title "Use-case диаграмма"
+
+actor "Администраторы" as Administrators
+actor "Фотографы" as Photographs
+actor "Покупатели" as Customers
+actor "Менеджер" as Manager
+
+usecase "Редактирование профиля" as EditProfile 
+usecase "Просмотр доходов" as IncomeTableView
+usecase "Просмотр товаров инвентаря" as ItemsTableView
+
+usecase "Занесение покупки в список продаж" as CreateSale 
+usecase "Редактирование списка инвентаря" as ItemsEdit
+usecase "Просмотр графика смен" as ShiftListView
+
+usecase "Создание покупки" as MakeSale
+usecase "Просмотр приобретенных товаров" as BoughtPhotoView
+
+usecase "Редактирование графика смен" as ShiftListEdit
+usecase "Редактирование списка сотрудников" as EmployeesEdit
+usecase "Вход в ЛК" as Login
+
+Administrators -- EditProfile
+Administrators -- IncomeTableView
+Administrators -- ItemsTableView
+
+Photographs -u- EditProfile
+Photographs -u- IncomeTableView
+Photographs -u- ItemsTableView
+
+Administrators -u- CreateSale
+Administrators -u- ItemsEdit
+Administrators -u- ShiftListView
+
+Customers - MakeSale 
+Customers -- Login
+Customers -u- EditProfile
+
+Photographs -u- ShiftListView
+
+Login -d- BoughtPhotoView
+
+Manager -u- ShiftListEdit
+Manager -u- EmployeesEdit
+Manager -u- ItemsEdit
+Manager -- EditProfile
+Manager -- ItemsTableView
+
+
+@enduml

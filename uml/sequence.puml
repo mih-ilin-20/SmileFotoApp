@@ -1,0 +1,41 @@
+@startuml final
+
+title Диаграмма последовательностей
+
+skinparam sequenceMessageAlign reversedirection
+
+actor "Покупатель" as Customer
+actor "Администратор" as Admin
+participant "Сервер" as Server
+participant "ЛК" as PO
+
+Customer -> Admin : Выбранные фото
+activate Customer
+activate Admin
+Customer -> Admin : Номер телефона
+
+activate Admin
+Admin -> Server : Запрос на создание ЛК с номером телефона
+deactivate Admin
+
+activate Server
+Server -> Server : Генерация логина и пароля
+Server -> Customer : Отправка СМС с логином и паролем
+deactivate Server
+
+group Нажатие кнопки авторизации
+
+    Customer -> Server : Логин и пароль
+
+    alt Вход в систему
+        Customer -> PO : Вход в ЛК
+        activate PO 
+        PO -> Customer : Фото
+        deactivate PO
+    else 
+        Server -> Customer : Неверные данные логина или пароля
+        deactivate Server
+    end 
+end
+
+@enduml

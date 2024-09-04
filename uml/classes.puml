@@ -1,0 +1,67 @@
+@startuml final
+
+title "Class Diagram"
+
+class "Shift" as ShiftList {
+    id: INTEGER
+    date: DATE
+    photographers: TEXT
+    administrators: TEXT
+}
+
+class "Inventory" as Inventory {
+    id: INTEGER
+    item_name: TEXT
+    price: INTEGER
+    quantity_in_stock: INTEGER
+    description: TEXT
+}
+
+class "Users" as Users {
+    id: INTEGER
+    full_name: TEXT
+    role: TEXT
+    phone_number: INTEGER
+    email: TEXT
+    password: TEXT
+    income: INTEGER
+}
+
+class "Sales" as Sales {
+    id: INTEGER
+    shift_date: DATE
+    shopping_id: INTEGER
+    photo_quantity: INTEGER
+    sale_amount: INTEGER
+    photographer_name: TEXT
+    user_id: INTEGER
+    description: TEXT
+}
+
+class "Shopping List" as ShoppingList {
+    id: INTEGER
+    item_id: INTEGER
+    item_quantity: INTEGER
+}
+
+class "Employee Income" as IncomeEmployee {
+    id: INTEGER
+    shift_date: DATE
+    day_of_week: TEXT
+    revenue: INTEGER
+    percentage: INTEGER
+    name: TEXT
+    income: INTEGER
+}
+
+ShiftList --{ IncomeEmployee
+ShiftList ---{ Sales
+Users --{ Sales
+Users }-{ IncomeEmployee
+Users }-{ ShiftList
+ShoppingList }-- Inventory
+ShoppingList --{ Sales 
+
+@enduml
+
+

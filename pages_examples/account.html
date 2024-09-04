@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title><!DOCTYPE html>
+        <html lang="ru">
+        <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Аккаунт</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        .header {
+            background-color: #5fa697;
+            padding: 10px;
+            text-align: left;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom-left-radius: 10px;
+            border-bottom-right-radius: 10px;
+            padding-left: 20px;
+        }
+
+        .header img {
+            width: 3.75em;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .nav-buttons button {
+            padding: 10px;
+            background-color: #5fa697;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 1.1rem;
+        }
+
+        .nav-buttons button:hover {
+            background-color: #499482;
+        }
+
+        .container {
+            display: flex;
+            flex-grow: 1;
+            padding: 20px;
+        }
+
+        .main {
+            width: 100%;
+            padding: 20px;
+            box-sizing: border-box;
+            background-color: white;
+            border-radius: 10px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        table, th, td {
+            border: 1px solid #ddd;
+            border-radius: 5px;
+        }
+
+        th, td {
+            padding: 10px;
+            text-align: left;
+        }
+
+        th {
+            background-color: #5fa697;
+            color: white;
+            border-radius: 5px;
+        }
+
+        .bottom-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-top: auto;
+        }
+
+        .pagination {
+            display: flex;
+            gap: 10px;
+        }
+
+        .pagination button {
+            padding: 10px 15px;
+            background-color: #5fa697;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .pagination button:hover {
+            background-color: #499482;
+        }
+
+        .actions {
+            display: flex;
+            gap: 10px;
+        }
+
+        .actions button {
+            padding: 10px;
+            background-color: #5fa697;
+            color: white;
+            border: none;
+            cursor: pointer;
+            border-radius: 5px;
+        }
+
+        .actions button:hover {
+            background-color: #499482;
+        }
+
+        .account-info {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-bottom: 20px;
+        }
+
+        .account-info label {
+            font-weight: bold;
+        }
+
+        .shift-schedule {
+            width: 100%;
+            border-collapse: collapse;
+        }
+
+        .shift-schedule th,
+        .shift-schedule td {
+            border: 1px solid #ddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .shift-schedule th {
+            background-color: #5fa697;
+            color: white;
+        }
+
+        .shift-schedule td.checked {
+            background-color: #5fa697;
+            color: white;
+        }
+
+        .edit-button {
+            margin-top: 10px;
+            padding: 5px 10px;
+            background-color: #5fa697;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: background-color 0.3s;
+            width: 20%;
+        }
+
+        .edit-button:hover {
+            background-color: #499482;
+        }
+    </style>
+</head>
+<body>
+
+<div class="header">
+    <img src="https://smilefoto.me/assets/32831d4f/images/logo.jpg" class="Logo">
+    <div class="nav-buttons">
+        <button>Профиль</button>
+        <button>Инвентарь</button>
+        <button>Продажи</button>
+        <button>Создать отчет смены</button>
+        <button>Выйти</button>
+    </div>
+</div>
+
+<div class="container">
+    <div class="main">
+        <div class="account-info">
+            <div>
+                <label>Полное имя:</label>
+                <span id="account-full-name"></span>
+            </div>
+            <div>
+                <label>Роль:</label>
+                <span id="account-role"></span>
+            </div>
+            <div>
+                <label>Номер телефона:</label>
+                <span id="account-phone-number"></span>
+            </div>
+            <div>
+                <label>Электронная почта:</label>
+                <span id="account-email"></span>
+            </div>
+            <div>
+                <label>Доход в месяц:</label>
+                <span id="account-income-per-month"></span>
+            </div>
+            <button class="edit-button">Редактировать</button>
+        </div>
+        <table class="shift-schedule">
+
+            <thead>
+            <tr id="shift-schedule-title" style="font-size: 1.5rem "></tr>
+            <tr>
+                <th>Дата</th>
+                <th>Понедельник</th>
+                <th>Вторник</th>
+                <th>Среда</th>
+                <th>Четверг</th>
+                <th>Пятница</th>
+                <th>Суббота</th>
+                <th>Воскресенье</th>
+            </tr>
+            </thead>
+            <tbody id="shift-schedule-body"></tbody>
+        </table>
+    </div>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        // заполняем личную информацию рандомными значениями
+        const accountInfo = {
+            full_name: 'Иван Иванов Иванович', // можно сгенерировать рандомное имя
+            role: 'Администратор', // можно сгенерировать рандомную роль
+            phone_number: '+79991234567', // можно сгенерировать рандомный номер телефона
+            email: 'ivanov@example.com', // можно сгенерировать рандомный адрес электронной почты
+            income_per_month: Math.floor(Math.random() * 100000)
+        };
+
+        Object.entries(accountInfo).forEach(([key, value]) => {
+            document.getElementById(`account-${key.replace(/_/g, '-')}`).textContent = value;
+        });
+
+        const shiftScheduleBody = document.getElementById('shift-schedule-body');
+        const daysInMonth = new Date(2024, 1, 0).getDate();
+        const weeksInMonth = Math.ceil(daysInMonth / 7);
+        const shiftScheduleTitle = document.getElementById('shift-schedule-title');
+        shiftScheduleTitle.textContent = `Январь 2024`;
+
+        for (let week = 1; week <= weeksInMonth; week++) {
+            const row = document.createElement('tr');
+
+            const dateCell = document.createElement('td');
+            dateCell.textContent = `Неделя ${week}`;
+            row.appendChild(dateCell);
+
+            for (let day = 1; day <= 7; day++) {
+                const cell = document.createElement('td');
+                const currentDay = (week - 1) * 7 + day;
+                if (currentDay <= daysInMonth) {
+                    cell.textContent = currentDay;
+                    cell.classList.toggle('checked', (currentDay - 2) % 4 === 0 || (currentDay - 3) % 4 === 0);
+                } else {
+                    cell.classList.add('empty');
+                }
+                row.appendChild(cell);
+            }
+
+            shiftScheduleBody.appendChild(row);
+        }
+    });
+</script>
+
+</body>
+</html>
+</title>
+</head>
+<body>
+
+</body>
+</html>

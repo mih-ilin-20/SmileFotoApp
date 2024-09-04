@@ -1,0 +1,33 @@
+@startuml
+title "Взаимодействие модулей системы SmileFoto"
+
+package "Модули системы" {
+    entity "График смен\n(ShiftList)" as ShiftList {
+    }
+
+    entity "Инвентарь\n(Inventory)" as Inventory {
+    }
+
+    entity "Пользователи\n(Users)" as Users {
+    }
+
+    entity "Лист всех продаж\n(Sales)" as Sales {
+    }
+
+    entity "Лист покупок\n(ShoppingList)" as ShoppingList {
+    }
+
+    entity "Выручка\n(IncomeEmployee)" as IncomeEmployee {
+    }
+}
+
+ShiftList -- IncomeEmployee : "Записывает доходы \nсотрудников по сменам"
+ShiftList -- Sales : "Записывает продажи по сменам"
+Users -- Sales : "Пользователь \nсовершает покупку"
+Users -- IncomeEmployee : "Пользователь \nполучает доход"
+Users -- ShiftList : "Пользователь \nучаствует в сменах"
+Sales -- ShoppingList : "Продажи включают \nтовары из списка покупок"
+ShoppingList -- Inventory : "Список покупок содержит \nтовары из инвентаря"
+Sales -- Users : "Продажи содержат \nинформацию о пользователях"
+
+@enduml
